@@ -49,7 +49,7 @@ filename=filename+"_"+date+".mat";
 
 for i=(N+1):Nconfig
     for j=1:2
-        u = metro_sweep(u,Nx,Nt,neigh_idx,beta,(i-1)*10+j);
+        u = metro_sweep(u,Nx,Nt,neigh_idx,beta,(i-1)*2+j);
     end
     ensemble(i,:,:,:,:,:,:)=u;
     save(filename,"ensemble");
