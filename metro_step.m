@@ -27,15 +27,9 @@ function [u_new,trials] = metro_step(u,n,dir,neigh_idx,beta)
 %             the link.
 
 trials=0;
-while true
-    [u_new,deltaS,t]=change_link_su3(u,n,dir,neigh_idx,beta);
-    trials=trials+t;
-%     Ta=min(1,exp(-deltaS));
-%     if(Ta>=random(0,1))
-%         break;
-%     end
-    break;
-end
+success=false;
+[u_new,success]=change_link_su3(u,n,dir,neigh_idx,beta);
+trials=trials+1;
 
 end
 

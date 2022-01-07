@@ -1,4 +1,4 @@
-function [new_u,deltaS,trials] = change_link_su3(u,n,dir,neigh_idx,beta)
+function [new_u,success] = change_link_su3(u,n,dir,neigh_idx,beta)
 %CHANGE_LINK_SU3 Creates a new configuration by changing a single link
 %
 % Inputs:
@@ -21,25 +21,20 @@ function [new_u,deltaS,trials] = change_link_su3(u,n,dir,neigh_idx,beta)
 %             the link.
 
 new_u=u;
+success=false;
 
 u_dir_n=build_su3(u(n(1),n(2),n(3),n(4),dir,:));
 
-trials=0;
-while true
-    
-    trials=trials+1;
-    u_dir_n_new=get_X_su3()*u_dir_n;
+u_dir_n_new=get_X_su3()*u_dir_n;
 
-    % N=3 for SU(3)
-    N=3;
-    deltaS=-beta/N*real(trace((u_dir_n_new-u_dir_n)*staple(u,n,dir,neigh_idx)));
+% N=3 for SU(3)
+N=3;
+deltaS=-beta/N*real(trace((u_dir_n_new-u_dir_n)*staple(u,n,dir,neigh_idx)));
 
-    if exp(-deltaS)>=random(0,1)
-        new_u(n(1),n(2),n(3),n(4),dir,:)=u_dir_n_new(:);
-        %u_dir_n_new(1,:)
-        break;
-    end
-end
+if exp(-deltaS)>=random(0,1)
+    success=true;
+    new_u(n(1),n(2),n(3),n(4),dir,:)=u_dir_n_new(:);
+    %u_dir_n_new(1,:)
 
 end
 

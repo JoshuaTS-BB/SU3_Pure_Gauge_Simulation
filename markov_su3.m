@@ -28,7 +28,7 @@ u=zeros(Nx,Nx,Nx,Nt,4,9);
 neigh_idx=create_neighbor_index(Nx,Nt);
 
 N=0;
-if initial_ensemble~=false
+if initial_ensemble(1)~=false
     N=size(initial_ensemble);
     N=N(1);
     ensemble(1:N,:,:,:,:,:,:)=initial_ensemble(:,:,:,:,:,:,:);
