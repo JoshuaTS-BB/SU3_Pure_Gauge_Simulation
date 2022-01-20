@@ -35,6 +35,7 @@ if exp(-deltaS)>=random(0,1)
     success=true;
     new_u(n(1),n(2),n(3),n(4),dir,:)=u_dir_n_new(:);
     %u_dir_n_new(1,:)
+end
 
 end
 
