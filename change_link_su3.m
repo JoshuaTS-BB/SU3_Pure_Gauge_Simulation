@@ -1,4 +1,4 @@
-function [new_u,success] = change_link_su3(u,n,dir,neigh_idx,beta)
+function [new_u,success] = change_link_su3(u,n,dir,neigh_idx,beta,s)
 %CHANGE_LINK_SU3 Creates a new configuration by changing a single link
 %
 % Inputs:
@@ -12,6 +12,7 @@ function [new_u,success] = change_link_su3(u,n,dir,neigh_idx,beta)
 %     neigh_idx: a cell array containing the indices of all of the neighbor
 %                links that need to be calculated for any given link
 %     beta:   the beta parameter to use for the gauge action
+%     s:      Random stream
 %
 % Outputs:
 %     u_new:  A cell array containing a new field configuration changed by
@@ -25,13 +26,13 @@ success=false;
 
 u_dir_n=build_su3(u(n(1),n(2),n(3),n(4),dir,:));
 
-u_dir_n_new=get_X_su3()*u_dir_n;
+u_dir_n_new=get_X_su3(s)*u_dir_n;
 
 % N=3 for SU(3)
 N=3;
 deltaS=-beta/N*real(trace((u_dir_n_new-u_dir_n)*staple(u,n,dir,neigh_idx)));
 
-if exp(-deltaS)>=random(0,1)
+if exp(-deltaS)>=random(0,1,s)
     success=true;
     new_u(n(1),n(2),n(3),n(4),dir,:)=u_dir_n_new(:);
     %u_dir_n_new(1,:)

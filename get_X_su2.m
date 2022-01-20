@@ -1,4 +1,4 @@
-function [X] = get_X_su2()
+function [X] = get_X_su2(s)
 %GET_X Returns a random SU(2) matrix near the identity (X and X^(-1) are
 %chosen with equal probability)
 
@@ -6,9 +6,9 @@ function [X] = get_X_su2()
 epsilon=0.4;
 
 %x0=randi([0,1]);
-x1=random(-0.5,0.5);
-x2=random(-0.5,0.5);
-x3=random(-0.5,0.5);
+x1=random(-0.5,0.5,s);
+x2=random(-0.5,0.5,s);
+x3=random(-0.5,0.5,s);
 
 r=(x1^2+x2^2+x3^2)^0.5;
 
@@ -25,7 +25,7 @@ x0=(1-epsilon^2)^0.5;
 
 X = x0*[1 0; 0 1] + 1i*x1*[0 1; 1 0] + 1i*x2*[0 -1i; 1i 0] + 1i*x3*[1 0; 0 -1];
 
-if randi([0,1])
+if randi(s,[0,1])
     X = ctranspose(X);
 end
 

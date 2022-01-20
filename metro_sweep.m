@@ -1,4 +1,4 @@
-function [u_new] = metro_sweep(u,Nx,Nt,neigh_idx,beta,i)
+function [u_new] = metro_sweep(u,Nx,Nt,neigh_idx,beta,s,i)
 %METRO_SWEEP Sweep through every link in the lattice using the metropolis
 %algorithm to generate a new field configuration
 %algorithm
@@ -16,6 +16,8 @@ function [u_new] = metro_sweep(u,Nx,Nt,neigh_idx,beta,i)
 %     neigh_idx: a cell array containing the indices of all of the neighbor
 %                links that need to be calculated for any given link
 %     beta:       the beta parameter to use for the gauge action
+%     s:      Random stream
+%     i:      Index to display for progress tracking
 %
 % Outputs:
 %     u_new:  A cell array containing a new field configuration. To 
@@ -33,7 +35,7 @@ for nx=1:Nx
             for nt=1:Nt
                 [i,nx ny nz nt]
                 for dir=1:4
-                    [u_new,t]=metro_step(u_new,[nx ny nz nt],dir,neigh_idx,beta);
+                    [u_new,t]=metro_step(u_new,[nx ny nz nt],dir,neigh_idx,beta,s);
                     trials=trials+t;
                 end
             end

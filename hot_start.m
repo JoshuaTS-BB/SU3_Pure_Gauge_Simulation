@@ -1,4 +1,4 @@
-function [config] = hot_start(Nx,Nt)
+function [config] = hot_start(Nx,Nt,s)
 %HOT_START Creates a random initial gauge field configuration for the
 %Markov chain
 %
@@ -7,6 +7,7 @@ function [config] = hot_start(Nx,Nt)
 %             dimension
 %     Nt:     the number of lattice points to use for the time
 %             dimension
+%     s:      Random stream
 %
 % Outputs:
 %     config: A cell array containing a gauge field configuration. To 
@@ -22,7 +23,7 @@ for ny=1:Nx
 for nz=1:Nx
 for nt=1:Nt
 for dir=1:4
-    config(nx,ny,nz,nt,dir,:)=rand_su3();
+    config(nx,ny,nz,nt,dir,:)=rand_su3(s);
 end
 end
 end

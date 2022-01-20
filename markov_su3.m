@@ -1,4 +1,4 @@
-function [ensemble] = markov_su3(Nx,Nt,beta,Nconfig,hot,initial_ensemble)
+function [ensemble] = markov_su3(Nx,Nt,beta,Nconfig,hot,initial_ensemble,idx)
 %MARKOV_SU2 Create an ensemble of gauge field configurations for the
 %group SU(2)
 %
@@ -10,6 +10,8 @@ function [ensemble] = markov_su3(Nx,Nt,beta,Nconfig,hot,initial_ensemble)
 %     beta:       the beta parameter to use for the gauge action
 %     Nconfig:    the number of configurations to generate
 %     hot:        true for a hot start and false otherwise
+%     idx:        an index to distinguish this ensemble from other similar
+%                 ones generated on the same day
 %
 % Outputs:
 %     ensemble:   A cell array of gauge field configurations. To access the 
@@ -27,6 +29,16 @@ u=zeros(Nx,Nx,Nx,Nt,4,9);
 
 neigh_idx=create_neighbor_index(Nx,Nt);
 
+if hot
+    filename=filename+"_hot";
+else
+    filename=filename+"_cold";
+end
+
+filename=filename+"_"+date+int2str(idx)+".mat";
+
+s=RandStream("mt19937ar","Seed",Nx*Nt+floor(beta*10)+datenum(date)+7*idx);
+
 N=0;
 if initial_ensemble(1)~=false
     N=size(initial_ensemble);
@@ -34,22 +46,14 @@ if initial_ensemble(1)~=false
     ensemble(1:N,:,:,:,:,:,:)=initial_ensemble(:,:,:,:,:,:,:);
     u(:,:,:,:,:,:)=ensemble(N,:,:,:,:,:,:);
 elseif hot
-    u = hot_start(Nx,Nt);
+    u = hot_start(Nx,Nt,s);
 else
     u = cold_start(Nx,Nt);
 end
 
-if hot
-    filename=filename+"_hot";
-else
-    filename=filename+"_cold";
-end
-
-filename=filename+"_"+date+".mat";
-
 for i=(N+1):Nconfig
     for j=1:2
-        u = metro_sweep(u,Nx,Nt,neigh_idx,beta,(i-1)*2+j);
+        u = metro_sweep(u,Nx,Nt,neigh_idx,beta,s,(i-1)*2+j);
     end
     ensemble(i,:,:,:,:,:,:)=u;
     save(filename,"ensemble");

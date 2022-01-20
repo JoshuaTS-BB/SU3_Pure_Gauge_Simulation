@@ -1,6 +1,6 @@
-function [r] = random(min,max)
+function [r] = random(min,max,s)
 
-r=min+rand()*(max-min);
+r=min+rand(s)*(max-min);
 
 end
 

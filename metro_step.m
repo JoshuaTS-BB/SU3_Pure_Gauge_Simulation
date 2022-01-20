@@ -1,4 +1,4 @@
-function [u_new,trials] = metro_step(u,n,dir,neigh_idx,beta)
+function [u_new,trials] = metro_step(u,n,dir,neigh_idx,beta,s)
 %METRO_STEP Generate the next link in a Markov chain using the metropolis
 %algorithm
 %
@@ -18,6 +18,7 @@ function [u_new,trials] = metro_step(u,n,dir,neigh_idx,beta)
 %     neigh_idx: a cell array containing the indices of all of the neighbor
 %                links that need to be calculated for any given link
 %     beta:       the beta parameter to use for the gauge action
+%     s:      Random stream
 %
 % Outputs:
 %     u_new:  A cell array containing a new field configuration. To 
@@ -28,7 +29,7 @@ function [u_new,trials] = metro_step(u,n,dir,neigh_idx,beta)
 
 trials=0;
 success=false;
-[u_new,success]=change_link_su3(u,n,dir,neigh_idx,beta);
+[u_new,success]=change_link_su3(u,n,dir,neigh_idx,beta,s);
 trials=trials+1;
 
 end

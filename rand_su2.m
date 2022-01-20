@@ -1,12 +1,12 @@
-function [X] = rand_su2()
+function [X] = rand_su2(s)
 %GET_X Returns the first row of a random SU(2) matrix
 
-epsilon=random(0,1);
+epsilon=random(0,1,s);
 
-x0=randi([0,1]);
-x1=random(-0.5,0.5);
-x2=random(-0.5,0.5);
-x3=random(-0.5,0.5);
+x0=randi(s,[0,1]);
+x1=random(-0.5,0.5,s);
+x2=random(-0.5,0.5,s);
+x3=random(-0.5,0.5,s);
 
 r=(x1^2+x2^2+x3^2)^0.5;
 
