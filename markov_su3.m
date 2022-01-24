@@ -37,7 +37,7 @@ end
 
 filename=filename+"_"+date+"_"+int2str(idx)+".mat";
 
-s=RandStream("mt19937ar","Seed",Nx*Nt+floor(beta*10)+datenum(date)+7*idx);
+s=RandStream('mt19937ar','Seed',Nx*Nt+floor(beta*10)+datenum(date)+7*idx);
 
 N=0;
 if initial_ensemble(1)~=false

@@ -3,7 +3,7 @@ function [X] = get_X_su2(s)
 %chosen with equal probability)
 
 % This parameter controls how much the matrix varies from the identity
-epsilon=0.4;
+epsilon=0.1;
 
 %x0=randi([0,1]);
 x1=random(-0.5,0.5,s);
