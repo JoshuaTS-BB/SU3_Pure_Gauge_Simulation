@@ -24,25 +24,19 @@ function [new_u,success] = change_link_su3(u,n,dir,neigh_idx,beta,s)
 new_u=u;
 success=false;
 
-staple=staple(u,n,dir,neigh_idx)));
-
 u_dir_n=build_su3(u(n(1),n(2),n(3),n(4),dir,:));
 
+u_dir_n_new=get_X_su3(s)*u_dir_n;
 
-for i=1:10
-    u_dir_n_new=get_X_su3(s)*u_dir_n;
+% N=3 for SU(3)
+N=3;
+deltaS=-beta/N*real(trace((u_dir_n_new-u_dir_n)*staple(u,n,dir,neigh_idx)));
 
-    % N=3 for SU(3)
-    N=3;
-    deltaS=-beta/N*real(trace((u_dir_n_new-u_dir_n)*staple;
-
-    if exp(-deltaS)>=random(0,1,s)
-        success=true;
-        u_dir_n=u_dir_n_new;
-    end
+if exp(-deltaS)>=random(0,1,s)
+    success=true;
+    new_u(n(1),n(2),n(3),n(4),dir,:)=u_dir_n_new(:);
+    %u_dir_n_new(1,:)
 end
-
-new_u(n(1),n(2),n(3),n(4),dir,:)=u_dir_n(:);
 
 end
 
