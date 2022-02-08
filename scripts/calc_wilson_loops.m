@@ -11,7 +11,7 @@ clear ensemble
 addpath("wilson_loops");
 
 dti=4;
-Ndt=2;
+Ndt=1;
 Ndx=5;
 
 wils_dt=cell(1,Ndx*Ndt);
@@ -21,8 +21,8 @@ parfor i=1:Ndt*Ndx
     dx=mod(i,Ndx);
     if(dx==0) dx=Ndx; end
     dt=floor((i-1)/Ndx)+dti;
-    [dx,dt]
-    wils_dt(i)={plot_wilson(ensemble2,dx,dt)};
+    [dx,dt];
+    wils_dt(i)={plot_wilson(ensemble2,dx,dt,filename)};
 end
 
 save("wilson_loops/wilson_loops_"+filename+".mat","wils_dt","Ndx","dti")
